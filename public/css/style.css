@@ -1,0 +1,13 @@
+table { border: 1px solid #ddd; }
+.nav.nav-pills { margin: 0px 15px;  background: #007bff; color: #fff; }
+.nav.nav-pills .nav-link.active { background: #ddd; color: #007bff; }
+
+.header{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-weight: 500;
+    font-size: 2.5rem;
+}

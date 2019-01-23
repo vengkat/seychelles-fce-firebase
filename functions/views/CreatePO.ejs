@@ -1,0 +1,133 @@
+<% layout('layout') -%>
+
+<style>
+.card-default {
+    color: #333;
+    background: linear-gradient(#fff,#ebebeb) repeat scroll 0 0 transparent;
+    font-weight: 600;
+    border-radius: 6px;
+}
+</style>
+<div class="container">
+<div id="accordion">
+    <div class="card card-default">
+        <div class="card-header">
+            <h4 class="card-title text-center">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                    <i class="glyphicon glyphicon-search text-gold"></i>
+                    <b>Create Purchase Order</b>
+                </a>
+            </h4>
+        </div>
+        <div id="collapse1" class="collapse show">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 col-lg-4">
+                        <div class="form-group">
+                            <label class="control-label">Currency</label>
+                            <select id="ddCurrency" class="form-control selectpicker" title="select a currency">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-1 col-lg-4">
+                        <div class="form-group">
+                            <label class="control-label">FMTC</label>
+                            <input type="text" class="form-control" id="txtFMTC"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label class="control-label">Amount</label>
+                            <input type="text" class="form-control" id="txtAmount"/>
+                        </div>
+                    </div>
+                    <div class="col-md-1 col-lg-4">
+                        <div class="form-group">
+                            <label class="control-label">Rate</label>
+                            <input type="text" class="form-control" id="txtRate"/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-1 col-lg-4">
+                        <div class="form-group">
+                            <label class="control-label">Amount Received</label>
+                            <input type="text" class="form-control" id="txtAmountPaid"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 col-lg-12">
+                        <div class="form-group">
+                            <label class="control-label">Customer Name</label>
+                            <input type="text" class="form-control" id="txtCustomerName"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 col-lg-12">
+                        <div class="form-group">
+                            <label class="control-label">Address line 1</label>
+                            <input type="text" class="form-control" id="txtAddress1"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 col-lg-12">
+                        <div class="form-group">
+                            <label class="control-label">Address line 2</label>
+                            <input type="text" class="form-control" id="txtAddress2"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 col-lg-12">
+                        <div class="form-group">
+                            <label class="control-label">Address line 3</label>
+                            <input type="text" class="form-control" id="txtAddress3"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 col-lg-12">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-secondary col-md-12 btn-space" onclick="RedirectToHome()">Cancel</button>
+                            <div class="clearfix"></div>
+                            <button type="button" class="btn btn-primary col-md-12 btn-space" style="margin-top:10px;" onclick="CreatePO()">Create Order</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>`
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalCreateOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Create order</h4>
+        </div>
+        <div class="modal-body">
+            <p>Order created successfully!</p>
+        </div>
+        <div class="modal-footer">
+            <div class="form-group">
+            <button type="button" class="btn btn-primary" onclick="RedirectToHome()">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/js/CreatePO.js"></script>

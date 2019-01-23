@@ -1,0 +1,56 @@
+<% layout('layout') -%>        
+<link rel="stylesheet" type="text/css" href="/css/ViewInvoice.css">
+        <div class="container">
+        <div class="starter-template">
+        <div class="wrapper">
+            <div class="header">SAYMORE - BUREAU DE  CHANGE</div>
+            <div class="header">SEYCHELLES INTERNATIONAL AIRPORT</div>
+            <div class="col-md-12 bordered">
+                <div class="col-sm-4 border-right"><label>SOLD</label></div>
+                <div class="col-sm-4 border-right"><label>FOREIGN CURRENCY</label></div>
+                <div class="col-sm-4"><label>DATE</label></div>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Currency Name</th>
+                        <th>FM</th>
+                        <th>Amount</th>
+                        <th>Rate</th>
+                        <th>Amount Received</th>
+                    </tr>
+                    <tbody>
+                        <%InvoiceOrderList.forEach(function(order){%>
+                        <tr>                          
+                            <td data-title="Name" ><%= order.CurrencyName %></td>
+                            <td data-title="FM"><%= order.FMTC %></td>         
+                            <td data-title="Amount"><%= order.Amount %></td>    
+                            <td data-title="Rate"><%= order.Rate %></td>   
+                            <td data-title="AmountReceived"><%= order.AmountReceived %></td>   
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </thead>
+            </table>
+            <div id="divSignature">
+                <div class="row bordered">
+                    <div class="col-sm-6 border-right">NAME</div>
+                    <div class="col-sm-6">SIGNATURE</div>
+                </div>
+            </div>
+            <div id="divAddress">
+                <div class="row">
+                    <div class=" col-md-6 border-no-top"><label>Address</label></div>
+                    <div class="col-md-6"></div>
+                </div>
+                <div class="row">
+                    <div class=" col-md-6 border-no-top"><label></label></div><div class="col-md-6"></div>
+                </div>
+                <div class="row">
+                    <div class=" col-md-6 border-no-top"><label></label></div><div class="col-md-6"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div> 

@@ -1,0 +1,135 @@
+<!-- <% layout('layout') -%>
+<link rel="stylesheet" type="text/css" href="/css/homeTabs.css">
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel with-nav-tabs panel-primary">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab1primary" data-toggle="tab">Primary 1</a></li>
+                    <li><a href="#tab2primary" data-toggle="tab">Primary 2</a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="tab1primary">Primary 1</div>
+                    <div class="tab-pane fade" id="tab2primary">Primary 2</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<% layout('layout') -%>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></script>
+<script src="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css"></script>
+<link rel="stylesheet" type="text/css" href="/css/home.css">
+<script type="text/javascript" src="/js/home.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/homeTabs.css">
+<!------ Include the above in your HEAD tag ---------->
+
+<div id="demo" class="text-center">
+  <!-- Responsive table starts here -->
+  <!-- For correct display on small screens you must add 'data-title' to each 'td' in your table -->
+
+    
+  <div class="table-responsive-vertical shadow-z-1">
+        <div class="col-md-12">
+            <div class="panel with-nav-tabs panel-primary">
+                <div class="panel-heading">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab1primary" data-toggle="tab">Primary 1</a></li>
+                        <li><a href="#tab2primary" data-toggle="tab">Primary 2</a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="tab1primary">Invoice Details
+                            <table id="tblInvoiceOrder" class="table table-hover table-mc-light-blue">
+                                <thead>
+                                    <tr>
+                                    <th>Order#</th>
+                                    <th>Currency Name</th>
+                                    <th>FMTC</th>
+                                    <th>Amount</th>
+                                    <th>Rate</th>
+                                    <th>Amount Received</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%InvoiceOrderList.forEach(function(order){%>
+                                    <tr>          
+                                        <td data-title="OrderNo"><%= order.OrderNo %></td>
+                                        <td data-title="Name" onclick="ShowPopup('<%= order.OrderNo %>',event)"><%= order.CurrencyName %></td>
+                                        <td data-title="FMTC"><%= order.FMTC %></td>         
+                                        <td data-title="Amount"><%= order.Amount %></td>    
+                                        <td data-title="Rate"><%= order.Rate %></td>   
+                                        <td data-title="AmountReceived"><%= order.AmountReceived %></td>   
+                                    </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="tab2primary">Purchase Order Details
+                            <table id="tblPurchaseOrder" class="table table-hover table-mc-light-blue">
+                                <thead>
+                                    <tr>
+                                    <th>Order#</th>
+                                    <th>Currency Name</th>
+                                    <th>FM</th>
+                                    <th>Amount</th>
+                                    <th>Rate</th>
+                                    <th>Amount Paid</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%InvoiceOrderList.forEach(function(order){%>
+                                    <tr>          
+                                        <td data-title="OrderNo"><%= order.OrderNo %></td>
+                                        <td data-title="Name" onclick="ShowPopup('<%= order.OrderNo %>',event)"><%= order.CurrencyName %></td>
+                                        <td data-title="FMTC"><%= order.FMTC %></td>         
+                                        <td data-title="Amount"><%= order.Amount %></td>    
+                                        <td data-title="Rate"><%= order.Rate %></td>   
+                                        <td data-title="AmountReceived"><%= order.AmountReceived %></td>   
+                                    </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+  <!-- Table starts here -->
+
+  </div>
+
+</div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modalUpdateCurrency" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Update currency details</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="txtCurrencyName" id=lblCurrencyName>Currency</label>
+            <input class="form-control" id="txtCurrencyName" type="text">
+          </div>
+          <div class="form-group">
+            <label for="txtCurrencyVal" id=lblCurrencyVal>Value</label>
+            <input class="form-control" id="txtCurrencyVal" type="text">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="form-group">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="UpdateCurrencyDetails()">Update value</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
