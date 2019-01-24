@@ -12,7 +12,9 @@
 <script type="text/javascript" src="/js/home.js"></script>
 <!-- <link rel="stylesheet" type="text/css" href="/css/homeTabs.css"> -->
 <!------ Include the above in your HEAD tag ---------->
-
+<style>
+.tab-content .tab-pane { border-top: none; }
+</style>
 <div class="text-center">
     <div class="row font-weight-bold">
     <div class="header">Seychelles invoice history</div>
@@ -45,7 +47,7 @@
                                         </thead>
                                         <tbody>
                                             <%InvoiceOrderList.forEach(function(order){%>
-                                            <tr onclick="RedirectToViewInvoice('<%= order.OrderNo %>',event)">          
+                                            <tr class="row-clickable" onclick="RedirectToViewInvoice('<%= order.OrderNo %>',event)">          
                                                 <td data-title="OrderNo" onclick="RedirectToViewInvoice('<%= order.OrderNo %>',event)"><a><%= order.OrderNo %></a></td>
                                                 <td data-title="Name" ><%= order.CurrencyName %></td>
                                                 <td data-title="FM"><%= order.FM %></td>         
@@ -71,7 +73,7 @@
                                         </thead>
                                         <tbody>
                                             <%PurchaseOrderList.forEach(function(order){%>
-                                            <tr onclick="RedirectToViewPO('<%= order.OrderNo %>',event)">          
+                                            <tr class="row-clickable" onclick="RedirectToViewPO('<%= order.OrderNo %>',event)">          
                                                 <td data-title="OrderNo" onclick="RedirectToViewPO('<%= order.OrderNo %>',event)"><a><%= order.OrderNo %></a></td>
                                                 <td data-title="Name" ><%= order.CurrencyName %></td>
                                                 <td data-title="FMTC"><%= order.FMTC %></td>         

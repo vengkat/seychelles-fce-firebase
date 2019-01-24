@@ -1,8 +1,9 @@
-const host = "https://"+location.host;
+//const host = "https://"+location.host;
 PopulateCurrencyDropdown();
 async function CreatePO(){
     let CurrencyDetails = {};
-    let result = ValidateForm();
+    let result = ValidateForm(); 
+    result= true;
     console.log('Validation result - '+ result);
     if(result)
     {
@@ -15,7 +16,7 @@ async function CreatePO(){
         let address1 = $("#txtAddress1").val();
         let address2 = $("#txtAddress2").val();
         let address3 = $("#txtAddress3").val();
-        CurrencyDetails = {
+        var OrderDetails = {
             CurrencyName : currencyName,
             FMTC : FMValue,
             Amount : amount,
@@ -23,27 +24,41 @@ async function CreatePO(){
             AmountPaid : amtPaid,
             CustomerName : customerName,
             Address  :{
-            AddressLine1   :  address1,
-            AddressLine2   :  address2,
-            AddressLine3   :  address3
+                AddressLine1   :  address1,
+                AddressLine2   :  address2,
+                AddressLine3   :  address3
             }
         };
-        console.log(CurrencyDetails);
-        let response = await $.post(host+"/api/Currency/CreatePO/"+JSON.stringify(CurrencyDetails));
-        if (response.err) { console.log('error');}
-        else { 
-            console.log('update success - '+response);
-            if(response === "Success"){
+        $.ajax({
+            url: '/api/Currency/CreatePO',
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(OrderDetails),
+            success: function (data) {
+                console.log(data);
                 $("#modalCreateOrder").modal("show");
-            }
-        } 
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log('error - '+errorThrown);
+                $("#modalCreateOrder").modal("show");
+             }            
+        });
+        // let response = await $.post(host+"/api/Currency/CreatePO/"+JSON.stringify(CurrencyDetails));
+        // if (response.err) { console.log('error');}
+        // else { 
+        //     console.log('update success - '+response);
+        //     if(response === "Success"){
+        //         $("#modalCreateOrder").modal("show");
+        //     }
+        // } 
     }
 }
 
 async function PopulateCurrencyDropdown(){
     let CurrencyList = [];
-    console.log("API call - "+host+"/api/Currency/GetCurrencyList");
-    let response = await $.get(host+"/api/Currency/GetCurrencyList");
+    console.log("API call - "+"/api/Currency/GetCurrencyList");
+    let response = await $.get("/api/Currency/GetCurrencyList");
     if (response.err) { console.log('error');}
     else { 
         //console.log('fetched response');
@@ -59,5 +74,5 @@ async function PopulateCurrencyDropdown(){
 }
 
 function RedirectToHome(){
-    location.href = "/Index";
+    location.href = "/Home";
 }

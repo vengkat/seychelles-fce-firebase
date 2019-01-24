@@ -1,108 +1,65 @@
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Firebase Hosting</title>
 
-<div id="demo">
-  <h1>Material Design Responsive Table</h1>
-  <h2>Table of my other Material Design works (list was updated 08.2015)</h2>
-  
-  <!-- Responsive table starts here -->
-  <!-- For correct display on small screens you must add 'data-title' to each 'td' in your table -->
-  <div class="table-responsive-vertical shadow-z-1">
-  <!-- Table starts here -->
-  <table id="table" class="table table-hover table-mc-light-blue">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Link</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td data-title="ID">1</td>
-          <td data-title="Name">Material Design Color Palette</td>
-          <td data-title="Link">
-            <a href="https://github.com/zavoloklom/material-design-color-palette" target="_blank">GitHub</a>
-          </td>
-          <td data-title="Status">Completed</td>
-        </tr>
-        <tr>
-          <td data-title="ID">2</td>
-          <td data-title="Name">Material Design Iconic Font</td>
-          <td data-title="Link">
-            <a href="http://codepen.io/zavoloklom/pen/uqCsB" target="_blank">Codepen</a>
-            <a href="https://github.com/zavoloklom/material-design-iconic-font" target="_blank">GitHub</a>
-          </td>
-          <td data-title="Status">Completed</td>
-        </tr>
-        <tr>
-          <td data-title="ID">3</td>
-          <td data-title="Name">Material Design Hierarchical Display</td>
-          <td data-title="Link">
-            <a href="http://codepen.io/zavoloklom/pen/eNaEBM" target="_blank">Codepen</a>
-            <a href="https://github.com/zavoloklom/material-design-hierarchical-display" target="_blank">GitHub</a>
-          </td>
-          <td data-title="Status">Completed</td>
-        </tr>
-        <tr>
-          <td data-title="ID">4</td>
-          <td data-title="Name">Material Design Sidebar</td>
-          <td data-title="Link"><a href="http://codepen.io/zavoloklom/pen/dIgco" target="_blank">Codepen</a></td>
-          <td data-title="Status">Completed</td>
-        </tr>
-        <tr>
-          <td data-title="ID">5</td>
-          <td data-title="Name">Material Design Tiles</td>
-          <td data-title="Link">
-            <a href="http://codepen.io/zavoloklom/pen/wtApI" target="_blank">Codepen</a>
-          </td>
-          <td data-title="Status">Completed</td>
-        </tr>
-        <tr>
-          <td data-title="ID">6</td>
-          <td data-title="Name">Material Design Typography</td>
-          <td data-title="Link">
-            <a href="http://codepen.io/zavoloklom/pen/IkaFL" target="_blank">Codepen</a>
-            <a href="https://github.com/zavoloklom/material-design-typography" target="_blank">GitHub</a>
-          </td>
-          <td data-title="Status">Completed</td>
-        </tr>
-        <tr>
-          <td data-title="ID">7</td>
-          <td data-title="Name">Material Design Buttons</td>
-          <td data-title="Link">
-            <a href="http://codepen.io/zavoloklom/pen/Gubja" target="_blank">Codepen</a>
-          </td>
-          <td data-title="Status">In progress</td>
-        </tr>
-        <tr>
-          <td data-title="ID">8</td>
-          <td data-title="Name">Material Design Form Elements</td>
-          <td data-title="Link">
-            <a href="http://codepen.io/zavoloklom/pen/yaozl" target="_blank">Codepen</a>
-          </td>
-          <td data-title="Status">In progress</td>
-        </tr>
-        <tr>
-          <td data-title="ID">9</td>
-          <td data-title="Name">Material Design Email Template</td>
-          <td data-title="Link">
-            <a href="http://codepen.io/zavoloklom/pen/qEVqzx" target="_blank">Codepen</a>
-          </td>
-          <td data-title="Status">Completed</td>
-        </tr>
-        <tr>
-          <td data-title="ID">10</td>
-          <td data-title="Name">Material Design Animation Timing (old one)</td>
-          <td data-title="Link">
-            <a href="http://codepen.io/zavoloklom/pen/Jbrho" target="_blank">Codepen</a>
-          </td>
-          <td data-title="Status">Completed</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/5.8.0/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/5.8.0/firebase-auth.js"></script>
+    <script defer src="/__/firebase/5.8.0/firebase-database.js"></script>
+    <script defer src="/__/firebase/5.8.0/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/5.8.0/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+
+    <style media="screen">
+      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
+      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
+      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
+      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
+      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
+      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
+      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
+      @media (max-width: 600px) {
+        body, #message { margin-top: 0; background: white; box-shadow: none; }
+        body { border-top: 16px solid #ffa100; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="message">
+      <h2>Welcome</h2>
+      <h1>Firebase Hosting Setup Complete</h1>
+      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
+      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+    </div>
+    <p id="load">Firebase SDK Loading&hellip;</p>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        // // The Firebase SDK is initialized and available here!
+        //
+        // firebase.auth().onAuthStateChanged(user => { });
+        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+        // firebase.messaging().requestPermission().then(() => { });
+        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+        //
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+        try {
+          let app = firebase.app();
+          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+        } catch (e) {
+          console.error(e);
+          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+        }
+      });
+    </script>
+  </body>
+</html>

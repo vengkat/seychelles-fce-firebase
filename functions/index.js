@@ -15,6 +15,11 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(function(req, res, next) {
+   res.header("Access-Control-Allow-Origin", "*");
+   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+   next();
+});
 
 var config = {
     projectId:"seychelles-dev-env",
@@ -80,13 +85,13 @@ app.get('/Home', function (req, res) {
              snapshot.forEach(doc => {
                 PurchaseOrderList.push(doc.data());                                 
              });           
-             console.log(PurchaseOrderList);   
+             //console.log(PurchaseOrderList);   
              res.locals = {title : "Home",InvoiceOrderList : InvoiceOrderList,PurchaseOrderList : PurchaseOrderList};  
              res.render("Home");                                                            
           })                                                            
     })
     .catch(err => {
-       console.log('Error getting documents', err);
+       //console.log('Error getting documents', err);
        res.locals = {title : "Home",InvoiceOrderList : InvoiceOrderList};  
        res.render("Home"); 
     });  
@@ -224,20 +229,30 @@ app.get('/CreatePO', function (req, res) {
  //============================================================================================================
  
  //Create Purchase Order
- app.post('/api/Currency/CreatePO/:OrderDetail',function(req, res){
-    let OrderDetail = JSON.parse(req.params.OrderDetail);
-    console.log('CreatePO :: OrderDetail', OrderDetail);
+ app.post('/api/Currency/CreatePO/',function(req, res){
+   let OrderDetail  = {
+      OrderNo  :  0,
+      CurrencyId  : req.body.CurrencyId, 
+      CurrencyName : req.body.CurrencyName,
+      FMTC : req.body.FMTC,
+      Amount : req.body.Amount,
+      Rate : req.body.Rate,
+      AmountPaid : req.body.AmountPaid,
+      CustomerName : req.body.CustomerName,
+      Address  :{
+         AddressLine1   :  req.body.Address.AddressLine1,
+         AddressLine2   :  req.body.Address.AddressLine2,
+         AddressLine3   :  req.body.Address.AddressLine3
+      }
+  };
+  console.log('OrderDetail: ', OrderDetail);
     let PurchaseOrderList = {};
-    let orderNo = 0;
     PORef.orderBy('OrderNo','desc').limit(1).get()
     .then(snapshot => {                              
        snapshot.forEach(doc => {
-          PurchaseOrderList = doc.data();    
-          console.log("PurchaseOrderList: ", PurchaseOrderList);                          
+          PurchaseOrderList = doc.data();                        
        });           
-       OrderDetail.OrderNo = parseInt(PurchaseOrderList.OrderNo) + 1;      
-       //console.log("list: ", orderNo);      
-       //InsertPOData(OrderDetail,res);      
+       OrderDetail.OrderNo = parseInt(PurchaseOrderList.OrderNo) + 1;       
        var addDoc = PORef.add({
         OrderNo  :  OrderDetail.OrderNo,
         CurrencyId  :  1, 
@@ -267,23 +282,38 @@ app.get('/CreatePO', function (req, res) {
  });
  
  //Create Invoice Order
- app.post('/api/Currency/CreateInvoice/:OrderDetail',function(req, res){
-    let OrderDetail = JSON.parse(req.body.OrderDetail);
-    console.log("CreateInvoice :: OrderDetail - ", OrderDetail);
+ app.post('/api/Currency/CreateInvoice/',function(req, res){
+   
+   //console.log("CreateInvoice :: OrderDetail - ", JSON.parse(req.body)); 
+    let OrderDetail  = {
+      OrderNo  :  0,
+      CurrencyId  : req.body.CurrencyId, 
+      CurrencyName : req.body.CurrencyName,
+      FM : req.body.FM,
+      Amount : req.body.Amount,
+      Rate : req.body.Rate,
+      AmountReceived : req.body.AmountReceived,
+      CustomerName : req.body.CustomerName,
+      Address  :{
+         AddressLine1   :  req.body.Address.AddressLine1,
+         AddressLine2   :  req.body.Address.AddressLine2,
+         AddressLine3   :  req.body.Address.AddressLine3
+      }
+  };  
     let InvoiceOrderList = {};
     let orderNo = 0;
+    
     InvoiceRef.orderBy('OrderNo','desc').limit(1).get()
     .then(snapshot => {                              
        snapshot.forEach(doc => {
-          InvoiceOrderList = doc.data();    
-                                   
+          InvoiceOrderList = doc.data();        
        });           
        OrderDetail.OrderNo = parseInt(InvoiceOrderList.OrderNo) + 1;      
-       console.log("orderNo: ", orderNo);
+       //console.log("OrderDetail : ", JSON.parse(OrderDetail));
        //InsertInvoiceData(OrderDetail,res);  
        var addDoc = InvoiceRef.add({
         OrderNo  :  OrderDetail.OrderNo,
-        CurrencyId  :  1, 
+        CurrencyId  : OrderDetail.CurrencyId, 
         CurrencyName   :  OrderDetail.CurrencyName,
         FM : OrderDetail.FM,
         Amount   :  OrderDetail.Amount,
