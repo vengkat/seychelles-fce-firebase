@@ -7,6 +7,8 @@
     border-radius: 6px;
 }
 </style>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<form id="form"></form>
 <div class="container">
 <div id="accordion">
     <div class="card card-default">
@@ -17,103 +19,108 @@
                     <b>Create Invoice</b>
                 </a>
             </h4>
-        </div>
-        <div id="collapse1" class="collapse show">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-3 col-lg-4">
-                        <div class="form-group">
-                            <label class="control-label">Currency</label>
-                            <!-- <input type="text" class="form-control" id="txtCurrencyName"/> -->
-                            <!-- <select id="ddCurrency" class="selectpicker" data-show-subtext="true" data-live-search="true">          
-                              </select> -->
-                              <select id="ddCurrency" class="form-control selectpicker" title="select a currency">
-                              </select>
-                              
+        </div>        
+            <div id="collapse1" class="collapse show">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-4">
+                            <div class="form-group">
+                                <label class="control-label">Currency</label>
+                                <!-- <input type="text" class="form-control" id="txtCurrencyName"/> -->
+                                <!-- <select id="ddCurrency" class="selectpicker" data-show-subtext="true" data-live-search="true">          
+                                </select> -->
+                                <select id="ddCurrency" name="Currency" class="form-control selectpicker required" title="select a currency">
+                                </select>
+                                <span class="txt-red" id="errddCurrency">&nbsp;</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-1 col-lg-4">
-                        <div class="form-group">
-                            <label class="control-label">FM</label>
-                            <input type="text" class="form-control" id="txtFMTC"/>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 col-lg-4">
-                        <div class="form-group">
-                            <label class="control-label">Amount</label>
-                            <input type="text" class="form-control" id="txtAmount"/>
-                        </div>
-                    </div>
-                    <div class="col-md-1 col-lg-4">
-                        <div class="form-group">
-                            <label class="control-label">Rate</label>
-                            <input type="text" class="form-control" id="txtRate"/>
+                        <div class="col-md-1 col-lg-4">
+                            <div class="form-group">
+                                <label class="control-label">FM</label>
+                                <input type="text" class="form-control required" id="txtFMTC" name="FMTC"/>
+                                <span class="txt-red" id="errtxtFMTC">&nbsp;</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="col-md-1 col-lg-4">
-                        <div class="form-group">
-                            <label class="control-label">Amount Received</label>
-                            <input type="text" class="form-control" id="txtAmountReceived"/>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label class="control-label">Amount</label>
+                                <input type="text" class="form-control required" id="txtAmount" name="Amount"/>
+                                <span class="txt-red" id="errtxtAmount">&nbsp;</span>
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-lg-4">
+                            <div class="form-group">
+                                <label class="control-label">Rate</label>
+                                <input type="text" class="form-control required" id="txtRate" name="Rate"/>
+                                <span class="txt-red" id="errtxtRate">&nbsp;</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-1 col-lg-4">
+                            <div class="form-group">
+                                <label class="control-label">Amount Received</label>
+                                <input type="text" class="form-control required" id="txtAmountReceived" name="Amount Received"/>
+                                <span class="txt-red" id="errtxtAmountReceived">&nbsp;</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-3 col-lg-12">
-                        <div class="form-group">
-                            <label class="control-label">Customer Name</label>
-                            <input type="text" class="form-control" id="txtCustomerName"/>
+                    <div class="row">
+                        <div class="col-md-3 col-lg-12">
+                            <div class="form-group">
+                                <label class="control-label">Customer Name</label>
+                                <input type="text" class="form-control required" id="txtCustomerName" name="Customer Name"/>
+                                <span class="txt-red" id="errtxtCustomerName">&nbsp;</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-3 col-lg-12">
-                        <div class="form-group">
-                            <label class="control-label">Address line 1</label>
-                            <input type="text" class="form-control" id="txtAddress1"/>
+                    <div class="row">
+                        <div class="col-md-3 col-lg-12">
+                            <div class="form-group">
+                                <label class="control-label">Address line 1</label>
+                                <input type="text" class="form-control" id="txtAddress1"/>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-3 col-lg-12">
-                        <div class="form-group">
-                            <label class="control-label">Address line 2</label>
-                            <input type="text" class="form-control" id="txtAddress2"/>
+                    <div class="row">
+                        <div class="col-md-3 col-lg-12">
+                            <div class="form-group">
+                                <label class="control-label">Address line 2</label>
+                                <input type="text" class="form-control" id="txtAddress2"/>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-3 col-lg-12">
-                        <div class="form-group">
-                            <label class="control-label">Address line 3</label>
-                            <input type="text" class="form-control" id="txtAddress3"/>
+                    <div class="row">
+                        <div class="col-md-3 col-lg-12">
+                            <div class="form-group">
+                                <label class="control-label">Address line 3</label>
+                                <input type="text" class="form-control" id="txtAddress3"/>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-3 col-lg-12">
-                        <div class="form-group">
-                            <button type="button" class="btn btn-secondary col-md-12 btn-space" onclick="RedirectToHome()">Cancel</button>
-                            <div class="clearfix"></div>
-                            <button type="button" class="btn btn-primary col-md-12 btn-space" style="margin-top:10px;" onclick="CreateInvoice()">Create Order</button>
+                    <div class="row">
+                        <div class="col-md-3 col-lg-4 offset-lg-4">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-secondary col-md-5 btn-space float-left" onclick="RedirectToHome()">Cancel</button>
+                               
+                                <button type="button" class="btn btn-primary col-md-5 btn-space float-right" onclick="CreateInvoice()">Create Order</button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            </div>`
-        </div>
+                </div>`
+            </div>        
     </div>
 </div>
 </div>
-
+</form>
 <!-- Modal -->
 <div class="modal fade" id="modalCreateOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">

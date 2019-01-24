@@ -268,7 +268,8 @@ app.get('/CreatePO', function (req, res) {
  
  //Create Invoice Order
  app.post('/api/Currency/CreateInvoice/:OrderDetail',function(req, res){
-    let OrderDetail = JSON.parse(req.params.OrderDetail);
+    let OrderDetail = JSON.parse(req.body.OrderDetail);
+    console.log("CreateInvoice :: OrderDetail - ", OrderDetail);
     let InvoiceOrderList = {};
     let orderNo = 0;
     InvoiceRef.orderBy('OrderNo','desc').limit(1).get()
@@ -278,7 +279,7 @@ app.get('/CreatePO', function (req, res) {
                                    
        });           
        OrderDetail.OrderNo = parseInt(InvoiceOrderList.OrderNo) + 1;      
-       //console.log("list: ", orderNo);
+       console.log("orderNo: ", orderNo);
        //InsertInvoiceData(OrderDetail,res);  
        var addDoc = InvoiceRef.add({
         OrderNo  :  OrderDetail.OrderNo,
@@ -295,10 +296,10 @@ app.get('/CreatePO', function (req, res) {
            AddressLine3   :  OrderDetail.Address.AddressLine3
         }
       }).then(ref => {
-        //console.log('Added document with ID: ', ref.id);
+        console.log('Added document with ID: ', ref.id);
         res.send("Success");
       }).catch(err => {
-        //console.log('Error adding documents', err);
+        console.log('Error adding documents', err);
         res.send(err);
      });                                                   
     })

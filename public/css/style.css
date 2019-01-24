@@ -11,3 +11,40 @@ table { border: 1px solid #ddd; }
     font-weight: 500;
     font-size: 2.5rem;
 }
+
+.row-clickable{
+    cursor: pointer;
+}
+
+span.txt-red {
+    color: #ff0000;
+    text-align: right;
+    font-size: 12px;
+    display: block;
+    padding-top: 5px;
+    display: none;
+}
+
+.nav-pills .nav-link {
+    border-radius: 0;
+    color: #fff; }
+
+    .nav-pills .nav-link a {
+        padding-top: 3px;
+display: inline-block;}
+
+.nav.nav-pills .nav-link.active
+{
+    background: #fff;
+    color: #007bff;
+    border-top: 6px solid #007bff;
+    border-radius: 0;
+}
+
+.nav-pills .nav-link a strong {
+    padding-top: 3px;
+display: inline-block;} 
+
+.form-group .bootstrap-select, .form-horizontal .bootstrap-select, .form-inline .bootstrap-select {
+    border: 1px solid #ced4da;;
+}

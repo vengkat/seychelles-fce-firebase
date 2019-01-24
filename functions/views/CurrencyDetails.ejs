@@ -23,7 +23,7 @@
       </thead>
       <tbody>
           <%currencyList.forEach(function(Currency,i){%>
-        <tr onclick="ShowPopup('<%= Currency.Id %>',event)">          
+        <tr class="row-clickable" onclick="ShowPopup('<%= Currency.Id %>',event)">          
             <td data-title="SNo"><a><%= i + 1 %></a></td>
             <td data-title="Name" data-message="world"><%= Currency.Name %></td>
             <td data-title="Value"><%= Currency.BuyingMin %></td>  
