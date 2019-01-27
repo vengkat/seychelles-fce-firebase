@@ -16,88 +16,77 @@
 .tab-content .tab-pane { border-top: none; }
 </style>
 <div class="text-center">
-    <div class="row font-weight-bold">
+  <div class="row font-weight-bold">
     <div class="header">Seychelles invoice history</div>
-    </div>
+  </div>
   <!-- Responsive table starts here -->
   <!-- For correct display on small screens you must add 'data-title' to each 'td' in your table -->
   <div class="table-responsive-vertical shadow-z-1">
   <!-- Table starts here -->
-  <div class="table-responsive-vertical shadow-z-1">
-        <div class="col-md-12">
-                <ul class="nav nav-pills">
-                       
-                        <li class="nav-item col-md-6" ><a class="nav-link active"  href="#tab1primary" data-toggle="tab"><strong>Sold Orders</strong></a></li>
-                    <li class="nav-item col-md-6"><a class="nav-link"  href="#tab2primary" data-toggle="tab"><strong>Purchase Orders</strong></a></li>
-                      </ul>
-                      
-                      <!-- Tab panes -->
-                      <div class="tab-content">
-                        <div class="tab-pane container active" id="tab1primary">
-                                <table id="tblInvoiceOrder" class="table table-hover table-mc-light-blue">
-                                        <thead>
-                                            <tr>
-                                                <th>Order#</th>
-                                                <th>Currency Name</th>
-                                                <th>FM</th>
-                                                <th>Amount</th>
-                                                <th>Rate</th>
-                                                <th>Amount Received</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <%InvoiceOrderList.forEach(function(order){%>
-                                            <tr class="row-clickable" onclick="RedirectToViewInvoice('<%= order.OrderNo %>',event)">          
-                                                <td data-title="OrderNo" onclick="RedirectToViewInvoice('<%= order.OrderNo %>',event)"><a><%= order.OrderNo %></a></td>
-                                                <td data-title="Name" ><%= order.CurrencyName %></td>
-                                                <td data-title="FM"><%= order.FM %></td>         
-                                                <td data-title="Amount"><%= order.Amount %></td>    
-                                                <td data-title="Rate"><%= order.Rate %></td>   
-                                                <td data-title="AmountReceived"><%= order.AmountReceived %></td>   
-                                            </tr>
-                                            <% }); %>
-                                        </tbody>
-                                    </table>
-                        </div>
-                        <div class="tab-pane container fade" id="tab2primary">
-                                <table id="tblPurchaseOrder" class="table table-hover table-mc-light-blue">
-                                        <thead>
-                                            <tr>
-                                            <th>Order#</th>
-                                            <th>Currency Name</th>
-                                            <th>FMTC</th>
-                                            <th>Amount</th>
-                                            <th>Rate</th>
-                                            <th>Amount Paid</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <%PurchaseOrderList.forEach(function(order){%>
-                                            <tr class="row-clickable" onclick="RedirectToViewPO('<%= order.OrderNo %>',event)">          
-                                                <td data-title="OrderNo" onclick="RedirectToViewPO('<%= order.OrderNo %>',event)"><a><%= order.OrderNo %></a></td>
-                                                <td data-title="Name" ><%= order.CurrencyName %></td>
-                                                <td data-title="FMTC"><%= order.FMTC %></td>         
-                                                <td data-title="Amount"><%= order.Amount %></td>    
-                                                <td data-title="Rate"><%= order.Rate %></td>   
-                                                <td data-title="AmountPaid"><%= order.AmountPaid %></td>   
-                                            </tr>
-                                            <% }); %>
-                                        </tbody>
-                                    </table>
-
-                        </div>
-                        
-                      </div>
-
-
-          
+    <div class="table-responsive-vertical shadow-z-1">
+      <div class="col-md-12">
+        <ul class="nav nav-pills">                       
+          <li class="nav-item col-md-6" ><a class="nav-link active"  href="#tab1primary" data-toggle="tab"><strong>Sold Orders</strong></a></li>
+          <li class="nav-item col-md-6"><a class="nav-link"  href="#tab2primary" data-toggle="tab"><strong>Purchase Orders</strong></a></li>
+        </ul>                      
+              <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane container active" id="tab1primary">
+            <table id="tblInvoiceOrder" class="table table-hover table-mc-light-blue">
+              <thead>
+                <tr>
+                  <th>Order#</th>
+                  <th>Currency</th>
+                  <th>Exchanged to</th>
+                  <th>Quantity</th>
+                  <th>Converted Rate</th>
+                  <th>Amount Received</th>
+                </tr>
+                </thead>
+                <tbody>
+                <%InvoiceOrderList.forEach(function(order){%>
+                <tr class="row-clickable" onclick="RedirectToViewInvoice('<%= order.OrderNo %>',event)">          
+                  <td data-title="OrderNo" onclick="RedirectToViewInvoice('<%= order.OrderNo %>',event)"><a><%= order.OrderNo %></a></td>
+                  <td data-title="Currency" ><%= order.CurrencyFrom %></td>
+                  <td data-title="Exchanged to"><%= order.CurrencyTo %></td>         
+                  <td data-title="Quantity"><%= order.Quantity %></td>    
+                  <td data-title="Rate"><%= order.Rate %></td>   
+                  <td data-title="AmountReceived"><%= order.AmountReceived %></td>   
+                </tr>
+              <% }); %>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane container fade" id="tab2primary">
+            <table id="tblPurchaseOrder" class="table table-hover table-mc-light-blue">
+                <thead>
+                  <tr>
+                    <th>Order#</th>
+                    <th>Currency</th>
+                    <th>Exchanged to</th>
+                    <th>Quantity</th>
+                    <th>Converted Rate</th>
+                    <th>Amount Received</th>
+                  </tr>
+                </thead>
+              <tbody>
+                <%PurchaseOrderList.forEach(function(order){%>
+                  <tr class="row-clickable" onclick="RedirectToViewPO('<%= order.OrderNo %>',event)">          
+                  <td data-title="OrderNo" onclick="RedirectToViewPO('<%= order.OrderNo %>',event)"><a><%= order.OrderNo %></a></td>
+                  <td data-title="Currency" ><%= order.CurrencyFrom %></td>
+                  <td data-title="Exchanged to"><%= order.CurrencyTo %></td>         
+                  <td data-title="Quantity"><%= order.Quantity %></td>    
+                  <td data-title="Rate"><%= order.Rate %></td>   
+                  <td data-title="AmountReceived"><%= order.AmountReceived %></td>    
+                </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
         </div>
-
-  <!-- Table starts here -->
-
+      </div>
+    </div>
   </div>
-  </div>
-
 </div>
 
   <!-- Modal -->

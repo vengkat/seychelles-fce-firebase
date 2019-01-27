@@ -13,12 +13,12 @@ async function ShowPopup(id){
     console.log(CurrencyDetails);
   }
 
-  function RedirectToViewInvoice(invoiceNo){
-      location.href="/ViewInvoice/"+invoiceNo;
-      console.log("/ViewInvoice/"+invoiceNo);
+  function RedirectToViewInvoice(orderNo){
+      location.href="/ViewSelling/"+orderNo;
+      console.log("/ViewSelling/"+orderNo);
   }
-  function RedirectToViewPO(PONo){
-    location.href="/ViewPO/"+PONo;
+  function RedirectToViewPO(orderNo){
+    location.href="/ViewBuying/"+orderNo;
 }
 //Hide popup
 

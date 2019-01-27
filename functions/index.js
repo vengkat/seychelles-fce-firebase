@@ -5,6 +5,8 @@ const path = require('path')
 const bodyParser = require('body-parser');
 var firebase = require("firebase");
 const admin = require("firebase-admin");
+var morgan = require('morgan');
+var fs = require('fs')
 const serviceAccount = require(__dirname+"/seychelles-dev-env-firebase-adminsdk-alaas-aa6ed2d677.json");
 const app = express();
 app.engine('ejs', engine);
@@ -14,6 +16,8 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
+var accessLogStream = fs.createWriteStream(path.join(__dirname+'/Logs/', 'logs.log'), { flags: 'a' })
+app.use(morgan('combined', { stream: accessLogStream }));
 
 app.use(function(req, res, next) {
    res.header("Access-Control-Allow-Origin", "*");
@@ -34,7 +38,7 @@ var config = {
 
 const CurrencyRef = db.collection('CurrencyMaster');
 const InvoiceRef = db.collection('InvoiceMaster');
-const PORef = db.collection('POMaster');
+const PORef = db.collection('PurchaseMaster');
 
 
 app.get('/',(request,response) => {
@@ -100,13 +104,13 @@ app.get('/Home', function (req, res) {
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
 
-//Invoice - Begins
-app.get('/CreatePO', function (req, res) {   
+//Selling - Begins
+app.get('/CreateBuying', function (req, res) {   
     res.locals = {title : "Create PO"}; 
-    res.render("CreatePO");
+    res.render("CreateBuying");
  })
  
- app.get('/ViewPO/:orderNo', function (req, res) {   
+ app.get('/ViewBuying/:orderNo', function (req, res) {   
     let orderNo = parseInt(req.params.orderNo);
     let PurchaseOrderList = [];
     PORef.where("OrderNo", "==", orderNo).get()
@@ -116,7 +120,7 @@ app.get('/CreatePO', function (req, res) {
        });           
        //console.log("list: ", PurchaseOrderList);
        res.locals = {title : "Purchase Order Details",PurchaseOrderList:PurchaseOrderList};
-       res.render("ViewPO");                                                              
+       res.render("ViewBuying");                                                              
     })
     .catch(err => {
        //console.log('Error getting documents', err);
@@ -124,33 +128,34 @@ app.get('/CreatePO', function (req, res) {
     }); 
  })
  
- app.get('/CreateInvoice', function (req, res) {   
-    res.locals = {title : "Create Invoice"}; 
-    res.render("CreateInvoice");
+ app.get('/CreateSelling', function (req, res) {   
+    res.locals = {title : "Selling"}; 
+    res.render("CreateSelling");
  })
  
- app.get('/ViewInvoice/:invoiceNo', function (req, res) {   
-    let invoiceNo = parseInt(req.params.invoiceNo);
+ app.get('/ViewSelling/:orderNo', function (req, res) {   
+    let orderNo = parseInt(req.params.orderNo);
+    //console.log("list: ", orderNo);
     let InvoiceOrderList = [];
-    InvoiceRef.where("OrderNo", "==", invoiceNo).get()
+    InvoiceRef.where("OrderNo", "==", orderNo).get()
     .then(snapshot => {                              
        snapshot.forEach(doc => {
           InvoiceOrderList.push(doc.data());                                 
        });           
        //console.log("list: ", InvoiceOrderList);
        res.locals = {title : "View Invoice",InvoiceOrderList:InvoiceOrderList};
-       res.render("ViewInvoice");                                                              
+       res.render("ViewSelling");                                                              
     })
     .catch(err => {
        //console.log('Error getting documents', err);
        res.send(err);
     }); 
  })
- //Invoice - Ends
+ //Selling - Ends
  
  
  //CurrencyMaster -- Begins
-  app.get('/CurrencyRate', function (req, res) {
+  app.get('/CurrencyMaster', function (req, res) {
     let list = [];
     CurrencyRef.orderBy("Name").get()
     .then(snapshot => {                              
@@ -161,12 +166,12 @@ app.get('/CreatePO', function (req, res) {
        });           
        //console.log(list);   
        res.locals = {title : "Currency Rate",currencyList : list};    
-       res.render("CurrencyDetails");                                                            
+       res.render("CurrencyMaster");                                                            
     })
     .catch(err => {
        //console.log('Error getting documents', err);
        res.locals = {title : "Currency Rate",currencyList : list};   
-       res.render("CurrencyDetails"); 
+       res.render("CurrencyMaster"); 
     });  
   })
  
@@ -229,7 +234,7 @@ app.get('/CreatePO', function (req, res) {
  //============================================================================================================
  
  //Create Purchase Order
- app.post('/api/Currency/CreatePO/',function(req, res){
+ app.post('/api/Currency/CreateBuying/',function(req, res){
    let OrderDetail  = {
       OrderNo  :  0,
       CurrencyId  : req.body.CurrencyId, 
@@ -282,54 +287,39 @@ app.get('/CreatePO', function (req, res) {
  });
  
  //Create Invoice Order
- app.post('/api/Currency/CreateInvoice/',function(req, res){
+ app.post('/api/Currency/CreateSelling/',function(req, res){
    
-   //console.log("CreateInvoice :: OrderDetail - ", JSON.parse(req.body)); 
-    let OrderDetail  = {
-      OrderNo  :  0,
-      CurrencyId  : req.body.CurrencyId, 
-      CurrencyName : req.body.CurrencyName,
-      FM : req.body.FM,
-      Amount : req.body.Amount,
-      Rate : req.body.Rate,
-      AmountReceived : req.body.AmountReceived,
-      CustomerName : req.body.CustomerName,
-      Address  :{
-         AddressLine1   :  req.body.Address.AddressLine1,
-         AddressLine2   :  req.body.Address.AddressLine2,
-         AddressLine3   :  req.body.Address.AddressLine3
-      }
-  };  
+   console.log("CreateInvoice :: req.body - "+ JSON.stringify(req.body)); 
+   console.log("CreateInvoice :: req.body.CurrencyFrom - "+ req.body.CurrencyFrom); 
+   let OrderDetails = {
+      "OrderNo"  :  0,
+      "CurrencyFrom"  : req.body.CurrencyFrom, 
+      "CurrencyTo" : req.body.CurrencyTo,
+      "Quantity" : req.body.Quantity,
+      "Rate" : req.body.Rate,
+      "AmountReceived" : req.body.AmountReceived,
+      "CustomerName" : req.body.CustomerName,
+      "PassportNumber":req.body.PassportNumber,
+      "Address"  : req.body.Address,
+      "Country":req.body.Country,
+      "NIN":req.body.NIN,
+      "PhoneNumber":req.body.PhoneNumber
+  };
+  
     let InvoiceOrderList = {};
     let orderNo = 0;
-    
+    console.log('OrderDetails - '+OrderDetails);
     InvoiceRef.orderBy('OrderNo','desc').limit(1).get()
     .then(snapshot => {                              
        snapshot.forEach(doc => {
           InvoiceOrderList = doc.data();        
        });           
-       OrderDetail.OrderNo = parseInt(InvoiceOrderList.OrderNo) + 1;      
-       //console.log("OrderDetail : ", JSON.parse(OrderDetail));
-       //InsertInvoiceData(OrderDetail,res);  
-       var addDoc = InvoiceRef.add({
-        OrderNo  :  OrderDetail.OrderNo,
-        CurrencyId  : OrderDetail.CurrencyId, 
-        CurrencyName   :  OrderDetail.CurrencyName,
-        FM : OrderDetail.FM,
-        Amount   :  OrderDetail.Amount,
-        Rate  :  OrderDetail.Rate,
-        AmountReceived :  OrderDetail.AmountReceived,
-        CustomerName : OrderDetail.CustomerName,
-        Address  :{
-           AddressLine1   :  OrderDetail.Address.AddressLine1,
-           AddressLine2   :  OrderDetail.Address.AddressLine2,
-           AddressLine3   :  OrderDetail.Address.AddressLine3
-        }
-      }).then(ref => {
-        console.log('Added document with ID: ', ref.id);
+       OrderDetails.OrderNo = parseInt(InvoiceOrderList.OrderNo) + 1;      
+       var addDoc = InvoiceRef.add(OrderDetails).then(ref => {
+        console.log('Added document with ID: '+ ref.id);
         res.send("Success");
       }).catch(err => {
-        console.log('Error adding documents', err);
+        console.log('Error adding documents - '+ err);
         res.send(err);
      });                                                   
     })
@@ -367,14 +357,23 @@ app.get('/CreatePO', function (req, res) {
  */
 
  //Update currency details
- app.post('/api/Currency/UpdateCurrencyDetails/:currency',function(req, res){
-    const currency = JSON.parse(req.params.currency);
-    CurrencyRef.doc(currency.Id).set({
-       Name :   currency.Name,
-       BuyingMin :    currency.BuyingMin,
-       SellingMax :   currency.SellingMax
-     });
-    res.send("Success");
+ app.post('/api/Currency/UpdateCurrencyDetails/',function(req, res){
+   res.setHeader("Content-Type","application/json");
+    let CurrencyDetails = JSON.parse(JSON.stringify(req.body.CurrencyDetails));
+
+    CurrencyRef.doc(CurrencyDetails.Id).set({
+      Name : CurrencyDetails.Name,
+      Code : CurrencyDetails.Code,
+      Value :CurrencyDetails.Value
+     }).then(ref => {
+      console.log('Document updated: ', ref.id);
+      res.statusCode = 200;
+      //res.json({"status":"Success"});
+      res.sendStatus(200);
+    }).catch(err => {
+      console.log('Error adding documents', err);
+      res.sendStatus(400) 
+   });
  });
 
 exports.app = functions.https.onRequest(app);

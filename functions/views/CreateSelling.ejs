@@ -7,7 +7,7 @@
     border-radius: 6px;
 }
 </style>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/js/CreateSelling.js"></script>
 <form id="form"></form>
 <div class="container">
 <div id="accordion">
@@ -16,45 +16,42 @@
             <h4 class="card-title text-center">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
                     <i class="glyphicon glyphicon-search text-gold"></i>
-                    <b>Create Invoice</b>
+                    <b>Selling</b>
                 </a>
             </h4>
         </div>        
             <div id="collapse1" class="collapse show">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-3 col-lg-4">
+                        <div class="col-md-3 col-lg-6">
                             <div class="form-group">
                                 <label class="control-label">Currency</label>
-                                <!-- <input type="text" class="form-control" id="txtCurrencyName"/> -->
-                                <!-- <select id="ddCurrency" class="selectpicker" data-show-subtext="true" data-live-search="true">          
-                                </select> -->
-                                <select id="ddCurrency" name="Currency" class="form-control selectpicker required" title="select a currency">
+                                <select id="ddCurrencyFrom" name="Currency from" class="form-control selectpicker required" data-subtext="true" title="Select">
                                 </select>
                                 <span class="txt-red" id="errddCurrency">&nbsp;</span>
                             </div>
-                        </div>
-                        <div class="col-md-1 col-lg-4">
+                        </div>     
+                        <div class="col-md-3 col-lg-6">
                             <div class="form-group">
-                                <label class="control-label">FM</label>
-                                <input type="text" class="form-control required" id="txtFMTC" name="FMTC"/>
-                                <span class="txt-red" id="errtxtFMTC">&nbsp;</span>
-                            </div>
-                        </div>
+                                <label class="control-label">Exchange To</label>
+                                <select id="ddCurrencyTo" name="Currency from" class="form-control selectpicker required" data-subtext="true" title="Select">
+                                </select>   
+                            </div>               
+                        </div>    
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4 col-lg-4">
+                        <div class="col-md-1 col-lg-4">
                             <div class="form-group">
-                                <label class="control-label">Amount</label>
-                                <input type="text" class="form-control required" id="txtAmount" name="Amount"/>
-                                <span class="txt-red" id="errtxtAmount">&nbsp;</span>
+                                <label class="control-label">Quantity</label>
+                                <input type="text" class="form-control required" id="txtQuantity" name="Quantity"/>
+                                <span class="txt-red" id="errtxtQuantity">&nbsp;</span>
                             </div>
                         </div>
                         <div class="col-md-1 col-lg-4">
                             <div class="form-group">
                                 <label class="control-label">Rate</label>
-                                <input type="text" class="form-control required" id="txtRate" name="Rate"/>
+                                <input type="text" class="form-control required" id="txtRate" name="Rate" readonly/>
                                 <span class="txt-red" id="errtxtRate">&nbsp;</span>
                             </div>
                         </div>
@@ -69,20 +66,18 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-3 col-lg-12">
+                        <div class="col-md-3 col-lg-8">
                             <div class="form-group">
                                 <label class="control-label">Customer Name</label>
                                 <input type="text" class="form-control required" id="txtCustomerName" name="Customer Name"/>
                                 <span class="txt-red" id="errtxtCustomerName">&nbsp;</span>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-3 col-lg-12">
+                        <div class="col-md-3 col-lg-4">
                             <div class="form-group">
-                                <label class="control-label">Address line 1</label>
-                                <input type="text" class="form-control" id="txtAddress1"/>
+                                <label class="control-label">Passport number</label>
+                                <input type="text" class="form-control required" id="txtPassportNumber" name="Passport number"/>
+                                <span class="txt-red" id="errtxtPassportNumber">&nbsp;</span>
                             </div>
                         </div>
                     </div>
@@ -90,8 +85,9 @@
                     <div class="row">
                         <div class="col-md-3 col-lg-12">
                             <div class="form-group">
-                                <label class="control-label">Address line 2</label>
-                                <input type="text" class="form-control" id="txtAddress2"/>
+                                <label class="control-label">Address</label>
+                                <input type="text" class="form-control" id="txtAddress" name="Address"/>
+                                <span class="txt-red" id="errtxtAddress">&nbsp;</span>
                             </div>
                         </div>
                     </div>
@@ -99,8 +95,26 @@
                     <div class="row">
                         <div class="col-md-3 col-lg-12">
                             <div class="form-group">
-                                <label class="control-label">Address line 3</label>
-                                <input type="text" class="form-control" id="txtAddress3"/>
+                                <label class="control-label">Country of Origin</label>
+                                <input type="text" class="form-control" id="txtCountry" name="Country of Origin"/>
+                                <span class="txt-red" id="errtxtCountry">&nbsp;</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label">NIN</label>
+                                <input type="text" class="form-control" id="txtNIN" name="NIN"/>
+                                <span class="txt-red" id="errtxtNIN">&nbsp;</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label">Phone number</label>
+                                <input type="text" class="form-control" id="txtPhoneNumber" name="Phone number"/>
+                                <span class="txt-red" id="errtxtPhoneNumber">&nbsp;</span>
                             </div>
                         </div>
                     </div>
@@ -139,4 +153,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="/js/CreateInvoice.js"></script>
+

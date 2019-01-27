@@ -1,0 +1,71 @@
+<% layout('layout') -%>        
+<link rel="stylesheet" type="text/css" href="/css/ViewInvoice.css">
+
+
+        <div class="container">
+        <div class="starter-template invoice-template">
+        <div class="wrapper">
+            <div class="header">
+                <p>SAYMORE - BUREAU DE  CHANGE</p>
+                <p>SEYCHELLES INTERNATIONAL AIRPORT</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-10"><label>Order:</label><span><%= InvoiceOrderList[0].OrderNo %></span></div>
+                <!-- <div class="col-sm-4"><label>Foreign Currency:</label><span>123645</span></div> -->
+                <div class="col-sm-2"><label>Date:</label><span>01/01/2019</span></div>
+            </div>
+            <!-- <div class="row">
+             <div class="col-sm-12"><label>Address:</label><span>123645</span></div>            
+            </div> -->
+           
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Currency</th>
+                        <th>Exchanged To</th>
+                        <th>Quantity</th>
+                        <th>Amount Received</th>
+                    </tr>
+                    <tbody>
+                        <%InvoiceOrderList.forEach(function(order){%>
+                        <tr>                          
+                            <td data-title="CurrencyFrom" ><%= order.CurrencyFrom %></td>
+                            <td data-title="CurrencyTo"><%= order.CurrencyTo %></td>         
+                            <td data-title="Quantity"><%= order.Quantity %></td>    
+                            <td data-title="AmountReceived"><%= order.AmountReceived %></td>   
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </thead>
+            </table>
+            <div  class="row">
+                <div class="col-sm-8"><label></label><span></span></div>
+                <div class="col-sm-4"><label></label><span></span></div>
+            </div>
+            <div id=divName class="row">
+                <div class="col-sm-8"><label>Name: </label><span>Bob</span></div>
+                <div class="col-sm-4"><label>Signature</label><span></span></div>
+            </div>
+            <!-- <div id="divSignature">
+                <div class="row bordered">
+                    <div class="col-sm-6 border-right"></div>
+                    <div class="col-sm-6"></div>
+                </div>
+            </div>
+            <div id="divAddress">
+                <div class="row">
+                    <div class=" col-md-6 border-no-top"><label></label></div>
+                    <div class="col-md-6"></div>
+                </div>
+                <div class="row">
+                    <div class=" col-md-6 border-no-top"><label></label></div><div class="col-md-6"></div>
+                </div>
+                <div class="row">
+                    <div class=" col-md-6 border-no-top"><label></label></div><div class="col-md-6"></div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    </div> 

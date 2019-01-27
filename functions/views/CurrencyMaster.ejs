@@ -1,0 +1,89 @@
+<% layout('layout') -%>
+<link rel="stylesheet" type="text/css" href="/css/currencymaster.css">
+<!-- <link rel="stylesheet" type="text/css" href="/css/gridstyle.css"> -->
+<script type="text/javascript" src="/js/CurrencyMaster.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="text-center">
+  <div class="row">
+    <div class="header">Currency rate Table</div>
+</div>
+  <!-- Responsive table starts here -->
+  <!-- For correct display on small screens you must add 'data-title' to each 'td' in your table -->
+  <div class="table-responsive-vertical shadow-z-1">
+  <!-- Table starts here -->
+  <table id="table" class="table table-hover table-mc-light-blue">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Currency</th>
+          <th>Code</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+          <%currencyList.forEach(function(Currency,i){%>
+        <tr class="row-clickable" onclick="ShowPopup('<%= Currency.Id %>','<%= Currency.Name %>','<%= Currency.Code %>','<%= Currency.Value %>',event)">          
+            <td data-title="OrderNo"><a><%= i + 1 %></a></td>
+            <td data-title="Name" data-message="world"><%= Currency.Name %></td>
+            <td data-title="Value"><%= Currency.Code %></td>  
+            <td data-title="Value"><%= Currency.Value %></td>          
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+  <!-- Modal -->
+<div class="modal fade" id="modalUpdateCurrency" tabindex="-1" role="dialog" aria-labelledby="modalUpdateCurrency" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Update currency details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="txtCurrencyName" id=lblCurrencyName>Currency</label>
+                <input class="form-control" id="txtCurrencyName" type="text">
+              </div>
+              <div class="form-group">
+                <label for="txtCode" id=lblSellingCode>Code</label>
+                <input class="form-control" id="txtCode" type="text">
+              </div>
+              <div class="form-group">
+                <label for="txtValue" id=lblValue>Value</label>
+                <input class="form-control" id="txtValue" type="text">
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="UpdateCurrencyDetails()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+<div class="modal fade" id="modalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Currency update</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>            
+        </div>
+        <div class="modal-body">
+            <p>Currency details updated successfully!</p>
+        </div>
+        <div class="modal-footer">
+            <div class="form-group">
+            <button type="button" class="btn btn-primary" onclick="ReloadCurrencyMaster()">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
