@@ -1,5 +1,4 @@
-//const host = "http://"+location.host;
-const host ="http://localhost:5001/seychelles-dev-env/us-central1/app";
+
 let CurrencyList = [];
 PopulateCurrencyDropdown();
 async function CreateInvoice(){
@@ -38,7 +37,7 @@ async function CreateInvoice(){
         };
         console.log('OrderDetails - '+OrderDetails);
         $.ajax({
-            url: '/api/Currency/CreateSelling',
+            url: '/api/Currency/CreateBuying',
             type: 'POST',
             dataType: 'json',
             contentType: 'application/json',
@@ -83,7 +82,7 @@ async function CreateInvoice(){
 
 async function PopulateCurrencyDropdown(){
     
-    console.log("API call - "+host+"/api/Currency/GetCurrencyList");
+    console.log("API call - /api/Currency/GetCurrencyList");
     let response = await $.get("/api/Currency/GetCurrencyList");
     if (response.err) { console.log('error');}
     else { 

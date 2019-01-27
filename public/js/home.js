@@ -14,11 +14,10 @@ async function ShowPopup(id){
   }
 
   function RedirectToViewInvoice(orderNo){
-      location.href="/ViewSelling/"+orderNo;
-      console.log("/ViewSelling/"+orderNo);
+      location.href="/ViewSold/"+orderNo;
   }
   function RedirectToViewPO(orderNo){
-    location.href="/ViewBuying/"+orderNo;
+    location.href="/ViewPurchase/"+orderNo;
 }
 //Hide popup
 

@@ -44,14 +44,14 @@
                         <div class="col-md-1 col-lg-4">
                             <div class="form-group">
                                 <label class="control-label">Quantity</label>
-                                <input type="text" class="form-control required" id="txtQuantity" name="Quantity"/>
+                                <input type="number" class="form-control required" id="txtQuantity" name="Quantity"/>
                                 <span class="txt-red" id="errtxtQuantity">&nbsp;</span>
                             </div>
                         </div>
                         <div class="col-md-1 col-lg-4">
                             <div class="form-group">
                                 <label class="control-label">Rate</label>
-                                <input type="text" class="form-control required" id="txtRate" name="Rate" readonly/>
+                                <input type="number" class="form-control required" id="txtRate" name="Rate" readonly/>
                                 <span class="txt-red" id="errtxtRate">&nbsp;</span>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                         <div class="col-md-1 col-lg-4">
                             <div class="form-group">
                                 <label class="control-label">Amount Received</label>
-                                <input type="text" class="form-control required" id="txtAmountReceived" name="Amount Received"/>
+                                <input type="number" class="form-control required" id="txtAmountReceived" name="Amount Received"/>
                                 <span class="txt-red" id="errtxtAmountReceived">&nbsp;</span>
                             </div>
                         </div>
@@ -124,7 +124,7 @@
                             <div class="form-group">
                                 <button type="button" class="btn btn-secondary col-md-5 btn-space float-left" onclick="RedirectToHome()">Cancel</button>
                                
-                                <button type="button" class="btn btn-primary col-md-5 btn-space float-right" onclick="CreateInvoice()">Create Order</button>
+                                <button type="button" class="btn btn-primary col-md-5 btn-space float-right" onclick="CreateInvoice()">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -139,8 +139,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Create order</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
             <p>Order created successfully!</p>

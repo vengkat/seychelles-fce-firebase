@@ -1,3 +1,4 @@
+'use strict'
 const functions = require('firebase-functions');
 const express = require('express');
 const engine = require('ejs-locals');
@@ -5,8 +6,8 @@ const path = require('path')
 const bodyParser = require('body-parser');
 var firebase = require("firebase");
 const admin = require("firebase-admin");
-var morgan = require('morgan');
-var fs = require('fs')
+//var morgan = require('morgan');
+//var fs = require('fs')
 const serviceAccount = require(__dirname+"/seychelles-dev-env-firebase-adminsdk-alaas-aa6ed2d677.json");
 const app = express();
 app.engine('ejs', engine);
@@ -16,8 +17,8 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
-var accessLogStream = fs.createWriteStream(path.join(__dirname+'/Logs/', 'logs.log'), { flags: 'a' })
-app.use(morgan('combined', { stream: accessLogStream }));
+//var accessLogStream = fs.createWriteStream(path.join(__dirname+'/Logs/', 'logs.log'), { flags: 'a' })
+//app.use(morgan('combined', { stream: accessLogStream }));
 
 app.use(function(req, res, next) {
    res.header("Access-Control-Allow-Origin", "*");
@@ -66,16 +67,6 @@ app.get('/',(request,response) => {
     });  
 });
 
-app.get('/timestamp',(request,response) => {
-    response.send(`${Date.now()}`);
-});
-
-app.get('/timestamp-cached',(request,response) => {
-    response.set('Cache-Control','public, max-age=300','s-maxage=600');
-    response.send(`${Date.now()}`);
-});
-
-
 app.get('/Home', function (req, res) {
     let InvoiceOrderList = [];
     let PurchaseOrderList = [];
@@ -106,11 +97,11 @@ app.get('/Home', function (req, res) {
 
 //Selling - Begins
 app.get('/CreateBuying', function (req, res) {   
-    res.locals = {title : "Create PO"}; 
+    res.locals = {title : "Create Buying"}; 
     res.render("CreateBuying");
  })
  
- app.get('/ViewBuying/:orderNo', function (req, res) {   
+ app.get('/ViewPurchase/:orderNo', function (req, res) {   
     let orderNo = parseInt(req.params.orderNo);
     let PurchaseOrderList = [];
     PORef.where("OrderNo", "==", orderNo).get()
@@ -120,7 +111,7 @@ app.get('/CreateBuying', function (req, res) {
        });           
        //console.log("list: ", PurchaseOrderList);
        res.locals = {title : "Purchase Order Details",PurchaseOrderList:PurchaseOrderList};
-       res.render("ViewBuying");                                                              
+       res.render("ViewPurchase");                                                              
     })
     .catch(err => {
        //console.log('Error getting documents', err);
@@ -133,7 +124,7 @@ app.get('/CreateBuying', function (req, res) {
     res.render("CreateSelling");
  })
  
- app.get('/ViewSelling/:orderNo', function (req, res) {   
+ app.get('/ViewSold/:orderNo', function (req, res) {   
     let orderNo = parseInt(req.params.orderNo);
     //console.log("list: ", orderNo);
     let InvoiceOrderList = [];
@@ -144,7 +135,7 @@ app.get('/CreateBuying', function (req, res) {
        });           
        //console.log("list: ", InvoiceOrderList);
        res.locals = {title : "View Invoice",InvoiceOrderList:InvoiceOrderList};
-       res.render("ViewSelling");                                                              
+       res.render("ViewSold");                                                              
     })
     .catch(err => {
        //console.log('Error getting documents', err);
@@ -235,50 +226,38 @@ app.get('/CreateBuying', function (req, res) {
  
  //Create Purchase Order
  app.post('/api/Currency/CreateBuying/',function(req, res){
-   let OrderDetail  = {
-      OrderNo  :  0,
-      CurrencyId  : req.body.CurrencyId, 
-      CurrencyName : req.body.CurrencyName,
-      FMTC : req.body.FMTC,
-      Amount : req.body.Amount,
-      Rate : req.body.Rate,
-      AmountPaid : req.body.AmountPaid,
-      CustomerName : req.body.CustomerName,
-      Address  :{
-         AddressLine1   :  req.body.Address.AddressLine1,
-         AddressLine2   :  req.body.Address.AddressLine2,
-         AddressLine3   :  req.body.Address.AddressLine3
-      }
+   
+    let OrderDetails = {
+      "OrderNo"  :  0,
+      "CurrencyFrom"  : req.body.CurrencyFrom, 
+      "CurrencyTo" : req.body.CurrencyTo,
+      "Quantity" : req.body.Quantity,
+      "Rate" : req.body.Rate,
+      "AmountReceived" : req.body.AmountReceived,
+      "CustomerName" : req.body.CustomerName,
+      "PassportNumber":req.body.PassportNumber,
+      "Address"  : req.body.Address,
+      "Country":req.body.Country,
+      "NIN":req.body.NIN,
+      "PhoneNumber":req.body.PhoneNumber
   };
-  console.log('OrderDetail: ', OrderDetail);
-    let PurchaseOrderList = {};
+  
+    let InvoiceOrderList = {};
+    let orderNo = 0;
+    //console.log('OrderDetails - '+OrderDetails);
     PORef.orderBy('OrderNo','desc').limit(1).get()
     .then(snapshot => {                              
        snapshot.forEach(doc => {
-          PurchaseOrderList = doc.data();                        
+          InvoiceOrderList = doc.data();        
        });           
-       OrderDetail.OrderNo = parseInt(PurchaseOrderList.OrderNo) + 1;       
-       var addDoc = PORef.add({
-        OrderNo  :  OrderDetail.OrderNo,
-        CurrencyId  :  1, 
-        CurrencyName   :  OrderDetail.CurrencyName,
-        FMTC : OrderDetail.FMTC,
-        Amount   :  OrderDetail.Amount,
-        Rate  :  OrderDetail.Rate,
-        AmountPaid :  OrderDetail.AmountPaid,
-        CustomerName : OrderDetail.CustomerName,
-        Address  :{
-           AddressLine1   :  OrderDetail.Address.AddressLine1,
-           AddressLine2   :  OrderDetail.Address.AddressLine2,
-           AddressLine3   :  OrderDetail.Address.AddressLine3
-        }
-      }).then(ref => {
-        console.log('Added document with ID: ', ref.id);
+       OrderDetails.OrderNo = parseInt(InvoiceOrderList.OrderNo) + 1;      
+       var addDoc = PORef.add(OrderDetails).then(ref => {
+        //console.log('Added document with ID: '+ ref.id);
         res.send("Success");
       }).catch(err => {
-        console.log('Error adding documents', err);
+        //console.log('Error adding documents - '+ err);
         res.send(err);
-     });                                               
+     });                                                   
     })
     .catch(err => {
        //console.log('Error getting documents', err);
@@ -288,9 +267,7 @@ app.get('/CreateBuying', function (req, res) {
  
  //Create Invoice Order
  app.post('/api/Currency/CreateSelling/',function(req, res){
-   
-   console.log("CreateInvoice :: req.body - "+ JSON.stringify(req.body)); 
-   console.log("CreateInvoice :: req.body.CurrencyFrom - "+ req.body.CurrencyFrom); 
+  
    let OrderDetails = {
       "OrderNo"  :  0,
       "CurrencyFrom"  : req.body.CurrencyFrom, 
@@ -377,29 +354,3 @@ app.get('/CreateBuying', function (req, res) {
  });
 
 exports.app = functions.https.onRequest(app);
-/*
-exports.InsertPOData = async function InsertPOData(OrderDetail,response){    
-    console.log("InsertPOData :: OrderDetail - " + OrderDetail);
-    var addDoc = await PORef.add({
-       OrderNo  :  OrderDetail.OrderNo,
-       CurrencyId  :  1, 
-       CurrencyName   :  OrderDetail.CurrencyName,
-       FMTC : OrderDetail.FMTC,
-       Amount   :  OrderDetail.Amount,
-       Rate  :  OrderDetail.Rate,
-       AmountPaid :  OrderDetail.AmountPaid,
-       CustomerName : OrderDetail.CustomerName,
-       Address  :{
-          AddressLine1   :  OrderDetail.Address.AddressLine1,
-          AddressLine2   :  OrderDetail.Address.AddressLine2,
-          AddressLine3   :  OrderDetail.Address.AddressLine3
-       }
-     }).then(ref => {
-       console.log('Added document with ID: ', ref.id);
-       response.send("Success");
-     }).catch(err => {
-       console.log('Error adding documents', err);
-       res.send(err);
-    });
- }
-*/
